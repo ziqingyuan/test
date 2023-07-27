@@ -15,13 +15,28 @@ async function checkDbConnection() {
     });
 }
 
+async function resetDemotable() {
+    const response = await fetch("/initiate-demotable", {
+        method: 'POST'
+    });
+    const responseData = await response.json();
+
+    if (responseData.success) {
+        const messageElement = document.getElementById('resetResult');
+        messageElement.textContent = "demotable initiated successfully!";
+        fetchTableData();
+    } else {
+        alert("Error initiating table!");
+    }
+}
+
 async function fetchAndDisplayUsers() {
-    const table = document.getElementById('usersTable');
+    const tableElement = document.getElementById('demoTable');
     const response = await fetch('/users');
     const users = await response.json();
     
     users.forEach(user => {
-        const row = table.insertRow();
+        const row = tableElement.insertRow();
         user.forEach((field, index) => {
             const cell = row.insertCell(index);
             cell.textContent = field;
@@ -31,5 +46,10 @@ async function fetchAndDisplayUsers() {
 
 window.onload = function() {
     checkDbConnection();
-    fetchAndDisplayUsers();
+    document.getElementById("resetDemotable").addEventListener("click", resetDemotable)
+    fetchTableData();
 };
+
+function fetchTableData() {
+    fetchAndDisplayUsers();
+}

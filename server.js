@@ -36,11 +36,44 @@ async function testOracleConnection() {
     }
   }
 
+  async function initiateDemontable() {
+    let connection;
+    try {
+      connection = await oracledb.getConnection(dbConfig);
+      try {
+        await connection.execute(`DROP TABLE DEMOTABLE`);
+      } catch(err) {
+        console.log('Table might not exist, proceeding to create...');
+      }
+
+      const result = await connection.execute(`
+        CREATE TABLE DEMOTABLE (
+            id NUMBER PRIMARY KEY,
+            name VARCHAR2(20)
+        )
+      `);
+        
+      console.log("Table created:", result);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    } finally {
+      if (connection) {
+          try {
+              await connection.close();
+          } catch (err) {
+              console.error(err);
+          }
+      }
+    }
+  }
+
   async function fetchUserFromDb() {
     let connection;
     try {
         connection = await oracledb.getConnection(dbConfig);
-        const result = await connection.execute('SELECT * FROM USER');
+        const result = await connection.execute('SELECT * FROM DEMOTABLE');
         return result.rows;
     } catch (err) {
         console.error(err);
@@ -64,6 +97,16 @@ app.get('/check-db-connection', async (req, res) => {
     res.send('connected');
   } else {
     res.send('unable to connect');
+  }
+});
+
+app.post("/initiate-demotable", async (req, res) => {
+  const initiateResult = await initiateDemontable();
+
+  if (initiateResult) {
+    res.json({ success: true });
+  } else {
+    res.status(500).json({ success: false });
   }
 });
 
