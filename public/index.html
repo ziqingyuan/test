@@ -2,38 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--this insure website rendered correctly for different device sizes-->
-    <!-- <link rel="stylesheet" href="styles.css">  --> <!--uncomment this line if you want to play around with css stylesheet-->
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
     <title>Database Application</title>
 </head>
 <body>
+    <!-- Display the current status of the database connection. 
+         The span with id="dbStatus" will be updated dynamically using JavaScript. -->
     <h1>Database Connection Status: 
         <span id="dbStatus"> </span>
+        <!-- A loading GIF that can be used to indicate background activity or data fetching. -->
         <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
     </h1>
 
-    <hr> <!--this is a visible separator (horizontal line) between sections of content-->
+    <!-- Horizontal line (<hr>) acts as a visual separator between sections. 
+         <br> inserts a line break for better spacing. -->
+    <br><hr><br> 
 
-    <h2>Reset DEMOTABLE</h2>
-
-    <button id="resetDemotable"> Reset Database DemoTable </button>
-    <div id="resetResult"></div>
-    <hr>
-
-    <h2>Users</h2>
-    <table id="demoTable" border="1">
+    <!-- Display contents of the 'Demotable'. Data will be fetched and inserted here dynamically using JavaScript. -->
+    <h2>Show Demotable</h2>
+    <table id="demotable" border="1">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name_N</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
 
+    <br><hr><br>
 
+    <!-- Provide an option to reset the 'Demotable'. -->
+    <h2>Reset Demotable</h2>
+    <!-- Instructional note about when and why to reset the table. -->
+    <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+    <button id="resetDemotable"> reset </button> <br>
+    <!-- A placeholder to display messages related to the reset operation. -->
+    <div id="resetResultMsg"></div>
 
+    <br><hr><br>
+
+    <!-- Provide an option to insert values into the 'Demotable'. -->
+    <h2> Insert Values into DemoTable </h2>
+    <form id="insertDemotable">
+        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
+        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="20"> <br><br>
+
+        <button type="submit"> insert </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the insert operation. -->
+    <div id="insertResultMsg"></div>
+
+    <br><hr><br>
+
+    <!-- Provide an option to update names in the 'Demotable'. -->
+    <h2>Update Name in DemoTable</h2>
+    <!-- Note about the case-sensitivity of the update operation. -->
+    <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+    <form id="updataNameDemotable">
+        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
+        New Name: <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20"> <br><br>
+
+        <button type="submit"> update </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the update operation. -->
+    <div id="updateNameResultMsg"></div>
+
+    <br><hr><br>
+
+    <!-- Provide an option to count the tuples/rows in the 'Demotable'. -->
+    <h2>Count the Tuples in DemoTable</h2>
+    <button id="countDemotable"> count </button> <br>
+    <!-- A placeholder to display the count result. -->
+    <div id="countResultMsg"></div> <br>
+
+    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
     <script src="scripts.js"></script>
 </body>
 </html>
